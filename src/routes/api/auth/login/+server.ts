@@ -13,7 +13,6 @@ export const POST: RequestHandler = async ({ request }) => {
 		return error(400, 'Missing required fields');
 	}
 
-	// Find user by email
 	const users = await db.select().from(User).where(eq(User.email, email));
 	const user = users[0];
 

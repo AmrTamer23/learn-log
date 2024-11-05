@@ -49,8 +49,10 @@
 	"dependencies": {
 		"@fontsource-variable/playfair-display": "^5.1.0",
 		"@libsql/client": "^0.14.0",
+		"@tanstack/svelte-query": "^5.59.17",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/jsonwebtoken": "^9.0.7",
+		"axios": "^1.7.7",
 		"bcryptjs": "^2.4.3",
 		"drizzle-orm": "^0.36.0",
 		"jsonwebtoken": "^9.0.2"
