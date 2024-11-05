@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, cookies }) => {
 	const { email, password } = await request.json();
 
 	if (!email || !password) {
@@ -31,9 +31,16 @@ export const POST: RequestHandler = async ({ request }) => {
 		{ expiresIn: '24h' }
 	);
 
+	cookies.set('auth_token', token, {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === 'production',
+		sameSite: 'strict',
+		path: '/',
+		maxAge: 60 * 60 * 24
+	});
+
 	const { password: _, ...userWithoutPassword } = user;
 	return json({
-		user: userWithoutPassword,
-		token
+		user: userWithoutPassword
 	});
 };
