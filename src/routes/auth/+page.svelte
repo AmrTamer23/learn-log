@@ -21,8 +21,20 @@
 			return;
 		}
 		passwordError = '';
-		// Handle form submission
+
 		console.log('Form submitted:', { isLogin, name, email, password });
+
+		const res = fetch('/api/auth/login', {
+			body: JSON.stringify({ isLogin, name, email, password }),
+			method: 'POST'
+		}).then((res) => {
+			if (res.ok) {
+				console.log('Login successful');
+				window.location.href = '/home';
+			} else {
+				console.log('Login failed');
+			}
+		});
 	}
 </script>
 
@@ -68,6 +80,7 @@
 							class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 							placeholder="Email address"
 						/>
+						<div class="text-red-500">{passwordError}</div>
 					</div>
 					<div>
 						<label for="login-password" class="sr-only">Password</label>
@@ -81,6 +94,7 @@
 							class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 							placeholder="Password"
 						/>
+						<div class="text-red-500">{passwordError}</div>
 					</div>
 					<div>
 						<button
