@@ -35,7 +35,7 @@
 			<div class="grid grid-cols-1 gap-12 md:grid-cols-3">
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-purple-600"
+						class="mx-auto mb-4 h-12 w-12 text-blue-500"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -52,7 +52,7 @@
 				</div>
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-purple-600"
+						class="mx-auto mb-4 h-12 w-12 text-blue-500"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -69,7 +69,7 @@
 				</div>
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-purple-600"
+						class="mx-auto mb-4 h-12 w-12 text-blue-500"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -111,27 +111,6 @@
 			</div>
 		</section>
 	{/if}
-
-	<!-- CTA Section -->
-	<section id="signup" class="py-20">
-		<div class="container mx-auto px-6 text-center">
-			<h2 class="mb-4 text-3xl font-bold">Ready to Supercharge Your Learning?</h2>
-			<p class="mb-8 text-xl">Join Learn Log today and take control of your educational journey.</p>
-			<form class="mx-auto max-w-md">
-				<input
-					type="email"
-					placeholder="Enter your email"
-					class="mb-4 w-full rounded-md border px-4 py-2"
-					required
-				/>
-				<button
-					type="submit"
-					class="w-full rounded-md bg-purple-600 px-6 py-2 text-lg font-semibold text-white transition duration-300 hover:bg-purple-700"
-					>Start Free Trial</button
-				>
-			</form>
-		</div>
-	</section>
 
 	<!-- Footer -->
 	<footer class="bg-gray-800 py-8 text-white">
