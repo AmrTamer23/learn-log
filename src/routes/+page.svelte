@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { Button } from '$lib/components/ui/button';
 
 	let showTestimonial = false;
 
@@ -13,7 +14,7 @@
 
 <main class="font-sans">
 	<!-- Hero Section -->
-	<section class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
+	<section class="hero rounded-lg text-white">
 		<div class="container mx-auto flex flex-col justify-center px-6 py-20 *:mx-auto">
 			<h1 class="mb-4 text-5xl font-bold">
 				Track Your Learning Journey with <span class="font-highlight font-thin italic">
@@ -23,11 +24,7 @@
 			<p class="mx-auto mb-8 text-xl">
 				Never lose track of your progress. Organize, monitor, and accelerate your learning.
 			</p>
-			<a
-				href="#signup"
-				class="rounded-full bg-white px-6 py-2 text-lg font-semibold text-purple-600 transition duration-300 hover:bg-gray-100"
-				>Get Started</a
-			>
+			<Button class="text-lg">Get Started</Button>
 		</div>
 	</section>
 
@@ -145,5 +142,8 @@
 </main>
 
 <style>
-	/* Any additional custom styles can go here */
+	.hero {
+		background-color: #004f8c;
+		background-image: url('https://www.transparenttextures.com/patterns/black-orchid.png');
+	}
 </style>
