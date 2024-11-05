@@ -1,10 +1,7 @@
 <script lang="ts">
 	let { children } = $props();
-	import { authStore, updateAuthState } from '$lib/stores/auth.store';
-	import { useStore } from '@tanstack/svelte-store';
+	import { updateAuthState } from '$lib/stores/auth.store';
 	import { onMount } from 'svelte';
-
-	const auth = useStore(authStore);
 
 	async function checkAuth() {
 		try {
