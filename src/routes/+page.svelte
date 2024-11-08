@@ -12,8 +12,7 @@
 	});
 </script>
 
-<main class="font-sans">
-	<!-- Hero Section -->
+<main class="p-1 font-sans">
 	<section class="hero rounded-lg text-white">
 		<div class="container mx-auto flex flex-col justify-center px-6 py-20 *:mx-auto">
 			<h1 class="mb-4 text-5xl font-bold">
@@ -24,11 +23,10 @@
 			<p class="mx-auto mb-8 text-xl">
 				Never lose track of your progress. Organize, monitor, and accelerate your learning.
 			</p>
-			<Button class="text-lg">Get Started</Button>
+			<a href="/auth"> <Button class="text-lg">Get Started</Button> </a>
 		</div>
 	</section>
 
-	<!-- Features Section -->
 	<section class="py-20">
 		<div class="container mx-auto px-6">
 			<h2 class="mb-12 text-center text-3xl font-bold">Why Choose Learn Log?</h2>
@@ -88,7 +86,6 @@
 		</div>
 	</section>
 
-	<!-- Testimonial Section -->
 	{#if showTestimonial}
 		<section class="bg-gray-100 py-20" transition:fade>
 			<div class="container mx-auto px-6">
@@ -112,7 +109,6 @@
 		</section>
 	{/if}
 
-	<!-- Footer -->
 	<footer class="bg-gray-800 py-8 text-white">
 		<div class="container mx-auto px-6 text-center">
 			<p>&copy; 2023 Learn Log. All rights reserved.</p>
