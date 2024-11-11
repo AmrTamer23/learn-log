@@ -18,14 +18,10 @@ export const GET: RequestHandler = async ({ request, cookies }) => {
 		return error(401, 'Unauthorized');
 	}
 
-	console.log(user.userId);
-
 	const courses = await db
 		.select()
 		.from(course)
 		.where(and(eq(course.userId, parseInt(user.userId)), eq(course.archived, false)));
-
-	console.log(courses);
 
 	return json({ courses });
 };
