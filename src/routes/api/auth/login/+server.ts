@@ -1,7 +1,7 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
-import { User } from '$lib/server/db/schema';
+import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -13,20 +13,20 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		return error(400, 'Missing required fields');
 	}
 
-	const users = await db.select().from(User).where(eq(User.email, email));
-	const user = users[0];
+	const users = await db.select().from(user).where(eq(user.email, email));
+	const userData = users[0];
 
-	if (!user) {
+	if (!userData) {
 		return error(401, 'Invalid credentials');
 	}
 
-	const isValidPassword = await bcrypt.compare(password, user.password);
+	const isValidPassword = await bcrypt.compare(password, userData.password);
 	if (!isValidPassword) {
 		return error(401, 'Invalid credentials');
 	}
 
 	const token = jwt.sign(
-		{ userId: user.id, email: user.email },
+		{ userId: userData.id, email: userData.email },
 		process.env.JWT_SECRET ?? 'your-secret-key',
 		{ expiresIn: '24h' }
 	);
@@ -39,7 +39,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		maxAge: 60 * 60 * 24
 	});
 
-	const { password: _, ...userWithoutPassword } = user;
+	const { password: _, ...userWithoutPassword } = userData;
 	return json({
 		user: userWithoutPassword
 	});
