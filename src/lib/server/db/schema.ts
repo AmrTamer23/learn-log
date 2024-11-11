@@ -36,5 +36,12 @@ export const Task = sqliteTable('Task', {
 	desc: text('desc'),
 	isDone: integer('isDone', {
 		mode: 'boolean'
-	})
+	}),
+	userId: integer('userId')
+		.references(() => User.id)
+		.notNull(),
+	courseId: integer('courseId')
+		.references(() => Course.id)
+		.notNull(),
+	dueDate: text('dueDate')
 });

@@ -16,6 +16,9 @@ export const task = sqliteTable("Task", {
 	title: text().notNull(),
 	desc: text(),
 	isDone: integer(),
+	userId: integer().notNull(),
+	courseId: integer().notNull(),
+	dueDate: text(),
 });
 
 export const user = sqliteTable("User", {
