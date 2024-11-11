@@ -10,7 +10,8 @@
 			dof: '2024-01-01',
 			color: '#3b82f6',
 			emoji: '💻',
-			progress: 65
+			progress: 65,
+			instructor: 'John Doe'
 		},
 		{
 			id: 2,
@@ -19,7 +20,8 @@
 			dof: '2024-01-15',
 			color: '#10b981',
 			emoji: '📊',
-			progress: 30
+			progress: 30,
+			instructor: 'Jane Smith'
 		},
 		{
 			id: 3,
@@ -28,7 +30,8 @@
 			dof: '2024-02-01',
 			color: '#f59e0b',
 			emoji: '📱',
-			progress: 45
+			progress: 45,
+			instructor: 'Mike Johnson'
 		},
 		{
 			id: 4,
@@ -37,7 +40,8 @@
 			dof: '2024-02-15',
 			color: '#ec4899',
 			emoji: '🎨',
-			progress: 80
+			progress: 80,
+			instructor: 'Sarah Brown'
 		}
 	];
 
@@ -46,36 +50,45 @@
 			id: 1,
 			title: 'Complete JavaScript Assignment',
 			desc: 'Submit final project for Web Development course',
-			isDone: 0
+			isDone: false,
+			dueDate: '2024-03-15'
 		},
 		{
 			id: 2,
 			title: 'Data Visualization Project',
 			desc: 'Create dashboard using Python and Matplotlib',
-			isDone: 0
+			isDone: false,
+			dueDate: '2024-03-20'
 		},
 		{
 			id: 3,
 			title: 'Mobile App Wireframes',
 			desc: 'Design initial screens for the fitness app',
-			isDone: 1
+			isDone: true,
+			dueDate: '2024-03-10'
 		},
 		{
 			id: 4,
 			title: 'User Research Report',
 			desc: 'Compile findings from user interviews',
-			isDone: 0
+			isDone: false,
+			dueDate: '2024-03-25'
 		}
 	];
+
+	function formatDate(dateString: string) {
+		const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+		return new Date(dateString).toLocaleDateString('en-US', options);
+	}
 </script>
 
-<main>
-	<Separator class="bg-zinc-600"></Separator>
+<main class="min-h-screen bg-zinc-900 text-zinc-100">
+	<Separator class="bg-zinc-700" />
 	<div class="flex justify-between gap-8 p-8">
 		<section class="flex w-3/5 flex-col gap-4">
 			<div class="flex items-center justify-between">
-				<h2 class="font- text-4xl">My Courses</h2>
-				<Button>
+				<h2 class="text-4xl font-bold">My Courses</h2>
+				<Button variant="outline" class="border-zinc-700 text-zinc-100 hover:bg-zinc-800">
 					<svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
 						><path
 							fill="none"
@@ -86,39 +99,81 @@
 							d="M5 12h14m-7-7v14"
 						/></svg
 					>
+					Add Course
 				</Button>
 			</div>
-			<div class="grid grid-cols-3 gap-6 pt-4">
+			<div class="grid grid-cols-2 gap-6 pt-4">
 				{#each mockCourses as course}
-					<div class="flex flex-col gap-2 rounded-lg border border-zinc-200 p-6 shadow-sm">
-						<div class="flex items-center gap-3">
-							<span class="text-2xl">{course.emoji}</span>
-							<h3 class="text-xl font-semibold">{course.name}</h3>
+					<div
+						class="hover:bg-zinc-750 flex flex-col gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-md transition-all duration-300"
+					>
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-3">
+								<span class="text-3xl">{course.emoji}</span>
+								<h3 class="text-xl font-semibold">{course.name}</h3>
+							</div>
+							<span class="text-sm text-zinc-400">Started: {formatDate(course.dof)}</span>
 						</div>
-						<p class="text-sm text-zinc-200">{course.desc}</p>
+						<p class="text-sm text-zinc-300">{course.desc}</p>
+						<div class="flex items-center gap-2 text-sm text-zinc-400">
+							<span>👨‍🏫</span>
+							<span>Instructor: {course.instructor}</span>
+						</div>
 						<div class="mt-2">
-							<div class="h-2 w-full rounded-full bg-zinc-100">
+							<div class="h-2 w-full rounded-full bg-zinc-700">
 								<div
-									class="h-2 rounded-full bg-primary transition-all"
-									style="width: {course.progress}%"
+									class="h-2 rounded-full transition-all duration-500 ease-in-out"
+									style="width: {course.progress}%; background-color: {course.color}"
 								></div>
 							</div>
-							<span class="mt-1 text-sm text-zinc-400">{course.progress}% Complete</span>
+							<span class="mt-1 text-sm font-medium" style="color: {course.color}"
+								>{course.progress}% Complete</span
+							>
 						</div>
 					</div>
 				{/each}
 			</div>
 		</section>
-		<section class="w-1/4">
-			<h2 class="font- text-4xl">Upcoming deadlines</h2>
-			<div class="mt-4 flex flex-col gap-3 pt-4">
+		<section class="w-2/5">
+			<h2 class="mb-6 text-4xl font-bold">Upcoming Deadlines</h2>
+			<div class="flex flex-col gap-4">
 				{#each mockTasks.filter((task) => !task.isDone) as task}
-					<div class="rounded-lg border border-zinc-200 p-4">
-						<h3 class="font-semibold">{task.title}</h3>
-						<p class="text-sm text-zinc-200">{task.desc}</p>
+					<div
+						class="hover:bg-zinc-750 rounded-lg border border-zinc-700 bg-zinc-800 p-5 transition-all duration-300"
+					>
+						<div class="mb-2 flex items-center justify-between">
+							<h3 class="text-lg font-semibold">{task.title}</h3>
+							<span class="flex items-center gap-1 text-sm font-medium text-amber-400">
+								<span>⏰</span>
+								Due: {formatDate(task.dueDate)}
+							</span>
+						</div>
+						<p class="mb-3 text-sm text-zinc-300">{task.desc}</p>
+						<div class="flex items-center justify-between">
+							<Button
+								variant="outline"
+								size="sm"
+								class="border-zinc-600 text-zinc-300 hover:bg-zinc-700"
+							>
+								Mark as Complete
+							</Button>
+							<span class="flex items-center gap-1 text-sm text-zinc-400">
+								<span class={task.isDone ? 'text-green-500' : 'text-zinc-600'}>
+									{task.isDone ? '✅' : '⭕'}
+								</span>
+								{task.isDone ? 'Completed' : 'Pending'}
+							</span>
+						</div>
 					</div>
 				{/each}
 			</div>
 		</section>
 	</div>
 </main>
+
+<style>
+	:global(body) {
+		background-color: #18181b;
+		color: #fafafa;
+	}
+</style>
