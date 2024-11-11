@@ -31,3 +31,6 @@ export const user = sqliteTable("User", {
 	dob: text(),
 });
 
+export const drizzleMigrations = sqliteTable("__drizzle_migrations", {
+});
+

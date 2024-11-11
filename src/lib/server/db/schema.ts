@@ -1,51 +1,37 @@
 import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core';
 
-export const User = sqliteTable('User', {
-	id: integer('id')
-		.primaryKey({
-			autoIncrement: true
-		})
-		.notNull(),
+export const user = sqliteTable('user', {
+	id: integer('id').primaryKey({ autoIncrement: true }).notNull(),
 	name: text('name').notNull(),
 	email: text('email').notNull(),
 	password: text('password').notNull(),
-	dob: text('dob')
+	dateOfBirth: text('dateOfBirth')
 });
 
-export const Course = sqliteTable('Course', {
-	id: integer('id')
-		.primaryKey({
-			autoIncrement: true
-		})
-		.notNull(),
+export const course = sqliteTable('course', {
+	id: integer('id').primaryKey({ autoIncrement: true }).notNull(),
 	name: text('name').notNull(),
-	desc: text('desc'),
-	dof: text('dof'),
+	description: text('description'),
+	dateOfStart: text('dateOfStart'),
 	color: text('color'),
 	emoji: text('emoji'),
-	progress: integer('progress'),
-	instructor: text('instructor'),
-	archived: integer('archived', {
-		mode: 'boolean'
-	})
+	progress: integer('progress').default(0),
+	archived: integer('archived', { mode: 'boolean' }).default(false),
+	userId: integer('userId')
+		.references(() => user.id)
+		.notNull()
 });
 
-export const Task = sqliteTable('Task', {
-	id: integer('id')
-		.primaryKey({
-			autoIncrement: true
-		})
-		.notNull(),
+export const task = sqliteTable('task', {
+	id: integer('id').primaryKey({ autoIncrement: true }).notNull(),
 	title: text('title').notNull(),
-	desc: text('desc'),
-	isDone: integer('isDone', {
-		mode: 'boolean'
-	}),
+	description: text('description'),
+	isDone: integer('isDone', { mode: 'boolean' }).default(false),
 	userId: integer('userId')
-		.references(() => User.id)
+		.references(() => user.id)
 		.notNull(),
 	courseId: integer('courseId')
-		.references(() => Course.id)
+		.references(() => course.id)
 		.notNull(),
 	dueDate: text('dueDate')
 });
