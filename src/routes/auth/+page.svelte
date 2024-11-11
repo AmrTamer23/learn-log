@@ -12,7 +12,7 @@
 	let email = $state('');
 	let password = $state('');
 	let confirmPassword = $state('');
-	let dob = $state(''); // New state for date of birth
+	let dob = $state('');
 	let passwordError = $state('');
 
 	async function handleSubmit(event: Event) {
