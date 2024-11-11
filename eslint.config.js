@@ -19,6 +19,9 @@ export default ts.config(
 		}
 	},
 	{
+		'@typescript-eslint/no-unused-vars': 'off'
+	},
+	{
 		files: ['**/*.svelte'],
 
 		languageOptions: {
