@@ -12,9 +12,10 @@
 	let email = $state('');
 	let password = $state('');
 	let confirmPassword = $state('');
+	let dob = $state(''); // New state for date of birth
 	let passwordError = $state('');
 
-	function handleSubmit(event: Event) {
+	async function handleSubmit(event: Event) {
 		event.preventDefault();
 		if (!isLogin && password !== confirmPassword) {
 			passwordError = "Passwords don't match";
@@ -22,24 +23,40 @@
 		}
 		passwordError = '';
 
-		console.log('Form submitted:', { isLogin, name, email, password });
+		console.log('Form submitted:', { isLogin, name, email, password, dob });
 
-		const res = fetch('/api/auth/login', {
-			body: JSON.stringify({ isLogin, name, email, password }),
-			method: 'POST'
-		}).then((res) => {
-			if (res.ok) {
-				console.log('Login successful');
-				window.location.href = '/home';
-			} else {
-				console.log('Login failed');
-			}
-		});
+		if (isLogin) {
+			await fetch('/api/auth/login', {
+				body: JSON.stringify({ email, password }),
+				method: 'POST'
+			}).then((res) => {
+				if (res.ok) {
+					console.log('Login successful');
+					window.location.href = '/home';
+				} else {
+					console.log('Login failed');
+				}
+			});
+		} else {
+			await fetch('/api/auth/register', {
+				body: JSON.stringify({ name, email, password, dob }),
+				method: 'POST'
+			}).then((res) => {
+				console.log('Registration successful');
+				if (res.ok) {
+					console.log('Registration successful');
+					isLogin = true;
+				} else {
+					console.log(res);
+					console.log('Registration failed');
+				}
+			});
+		}
 	}
 </script>
 
 <div class="flex min-h-screen items-center justify-center px-4 sm:px-6 lg:px-8">
-	<div class="w-full max-w-md space-y-8 rounded-xl bg-white p-6 shadow-md">
+	<div class=" w-full max-w-md space-y-8 rounded-xl p-6 shadow-md">
 		<div class="flex justify-center">
 			<div class="rounded-full bg-gray-200 p-1">
 				<button
@@ -61,7 +78,7 @@
 			</div>
 		</div>
 
-		<div class="overflow-hidden" style="height: {isLogin ? '240px' : '380px'}">
+		<div class="overflow-hidden" style="height: {isLogin ? '240px' : '440px'}">
 			<div
 				class="flex transition-transform duration-300 ease-in-out"
 				style="transform: translateX(-{$formPosition}%); width: 200%;"
@@ -80,7 +97,6 @@
 							class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 							placeholder="Email address"
 						/>
-						<div class="text-red-500">{passwordError}</div>
 					</div>
 					<div>
 						<label for="login-password" class="sr-only">Password</label>
@@ -146,6 +162,17 @@
 							bind:value={email}
 							class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 							placeholder="Email address"
+						/>
+					</div>
+					<div>
+						<label for="signup-dob" class="sr-only">Date of Birth</label>
+						<input
+							id="signup-dob"
+							name="dateOfBirth"
+							type="date"
+							required
+							bind:value={dob}
+							class="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
 						/>
 					</div>
 					<div>
