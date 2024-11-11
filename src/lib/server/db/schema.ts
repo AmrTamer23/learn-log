@@ -23,7 +23,11 @@ export const Course = sqliteTable('Course', {
 	dof: text('dof'),
 	color: text('color'),
 	emoji: text('emoji'),
-	progress: integer('progress')
+	progress: integer('progress'),
+	instructor: text('instructor'),
+	archived: integer('archived', {
+		mode: 'boolean'
+	})
 });
 
 export const Task = sqliteTable('Task', {

@@ -1,4 +1,4 @@
-import { sqliteTable, AnySQLiteColumn, integer, text } from "drizzle-orm/sqlite-core"
+import { sqliteTable, AnySQLiteColumn, integer, text, foreignKey } from "drizzle-orm/sqlite-core"
   import { sql } from "drizzle-orm"
 
 export const course = sqliteTable("Course", {
@@ -9,6 +9,8 @@ export const course = sqliteTable("Course", {
 	color: text(),
 	emoji: text(),
 	progress: integer(),
+	instructor: text(),
+	archived: integer(),
 });
 
 export const task = sqliteTable("Task", {
@@ -16,8 +18,8 @@ export const task = sqliteTable("Task", {
 	title: text().notNull(),
 	desc: text(),
 	isDone: integer(),
-	userId: integer().notNull(),
-	courseId: integer().notNull(),
+	userId: integer().notNull().references(() => user.id),
+	courseId: integer().notNull().references(() => course.id),
 	dueDate: text(),
 });
 
