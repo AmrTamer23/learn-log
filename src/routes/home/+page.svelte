@@ -82,7 +82,7 @@
 	}
 </script>
 
-<main class="min-h-screen bg-zinc-900 text-zinc-100">
+<main class="h-[92dvh] max-h-full bg-zinc-900 text-zinc-100">
 	<Separator class="bg-zinc-700" />
 	<div class="flex justify-between gap-8 p-8">
 		<section class="flex w-3/5 flex-col gap-4">

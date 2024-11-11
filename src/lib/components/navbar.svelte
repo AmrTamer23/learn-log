@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Avatar from '$lib/components/ui/avatar';
+	import Button from './ui/button/button.svelte';
 	let {
 		name
 	}: {
@@ -8,7 +9,7 @@
 	console.log(name);
 </script>
 
-<nav class="flex h-full w-full items-end justify-between px-8 py-4">
+<nav class="flex h-[8dvh] w-full items-end justify-between px-8 py-4">
 	<div>
 		<a
 			href="/"
@@ -18,9 +19,8 @@
 		</a>
 	</div>
 
-	<Avatar.Root class="size-14 bg-stone-800 font-highlight text-xl italic shadow-md">
-		<Avatar.Fallback class="cursor-pointer border-2 border-[#f9e8a4] bg-zinc-900 text-zinc-100">
-			{name?.charAt(0).toUpperCase()}
-		</Avatar.Fallback>
-	</Avatar.Root>
+	<div class="flex items-center gap-4">
+		<Button class="text-xl" variant="secondary">My Profile</Button>
+		<Button class="text-xl" variant="destructive">Logout</Button>
+	</div>
 </nav>
