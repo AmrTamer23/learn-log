@@ -3,7 +3,7 @@
 	import { authStore as store, updateAuthState } from '$lib/stores/auth.store';
 	import { useStore } from '@tanstack/svelte-store';
 	import { onMount } from 'svelte';
-	import Navbar from '$lib/components/navbar.svelte';
+	import Navbar from '$lib/components/layout/navbar.svelte';
 
 	const authStore = useStore(store);
 

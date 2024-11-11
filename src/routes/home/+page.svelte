@@ -1,10 +1,12 @@
 <script lang="ts">
+	import CourseItem from '$lib/components/home/course-item.svelte';
+	import TaskItem from '$lib/components/home/task-item.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import type { Course } from '$lib/types';
+	import type { Course, Task } from '$lib/types';
 	import { createQuery } from '@tanstack/svelte-query';
 
-	const query = createQuery<
+	const coursesQuery = createQuery<
 		{
 			courses: Course[];
 		},
@@ -19,7 +21,6 @@
 				credentials: 'include'
 			});
 			const data = await response.json();
-			console.log('Response:', data); // Log the response to check the data structure
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
@@ -27,10 +28,29 @@
 		}
 	});
 
-	function formatDate(dateString: string) {
-		const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
-		return new Date(dateString).toLocaleDateString('en-US', options);
-	}
+	const upTasksQuery = createQuery<
+		{
+			tasks: Task[];
+		},
+		Error
+	>({
+		queryKey: ['tasks'],
+		queryFn: async () => {
+			const response = await fetch('/api/up-tasks', {
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			});
+			const data = await response.json();
+			if (!response.ok) {
+				throw new Error('Network response was not ok');
+			}
+			return data;
+		}
+	});
+
+	console.log('Tasks Query:', $upTasksQuery.data?.tasks);
 </script>
 
 <main class="h-[92dvh] max-h-full bg-zinc-900 text-zinc-100">
@@ -59,80 +79,80 @@
 				</Button>
 			</div>
 			<div class="grid grid-cols-2 gap-6 pt-4">
-				{#if $query.isLoading}
-					<p>Loading...</p>
-				{:else if $query.isError}
-					<p>Error loading courses: {$query.error.message}</p>
-				{:else if $query?.data?.courses?.length ?? 0 > 0}
-					{#each $query?.data?.courses || [] as course}
+				{#if $coursesQuery.isLoading}
+					{#each Array(4) as _}
 						<div
-							class="hover:bg-zinc-750 flex flex-col gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-md transition-all duration-300"
+							class="flex flex-col gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-md"
 						>
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-3">
-									<span class="text-3xl">{course.emoji}</span>
-									<h3 class="text-xl font-semibold">{course.name || ''}</h3>
+									<div class="h-8 w-8 animate-pulse rounded-full bg-zinc-700"></div>
+									<div class="h-6 w-32 animate-pulse rounded bg-zinc-700"></div>
 								</div>
-								<span class="text-sm text-zinc-400">
-									Started: {formatDate(course.dateOfStart || '')}
-								</span>
+								<div class="h-4 w-24 animate-pulse rounded bg-zinc-700"></div>
 							</div>
-							<p class="text-sm text-zinc-300">{course.description || ''}</p>
-							<div class="flex items-center gap-2 text-sm text-zinc-400">
-								<span>👨‍🏫</span>
-								<span>Instructor: {course.instructor === '' ? 'Not set' : course.instructor}</span>
-							</div>
+							<div class="h-4 w-full animate-pulse rounded bg-zinc-700"></div>
+							<div class="h-4 w-3/4 animate-pulse rounded bg-zinc-700"></div>
 							<div class="mt-2">
 								<div class="h-2 w-full rounded-full bg-zinc-700">
-									<div
-										class="h-2 rounded-full transition-all duration-500 ease-in-out"
-										style="width: {course.progress}%; background-color: {course.color}"
-									></div>
+									<div class="h-2 w-1/2 animate-pulse rounded-full bg-zinc-600"></div>
 								</div>
-								<span class="mt-1 text-sm font-medium" style="color: {course.color}">
-									{course.progress}% Complete
-								</span>
 							</div>
 						</div>
 					{/each}
+				{:else if $coursesQuery.isError}
+					<div class="col-span-2 rounded-lg border border-red-700 bg-red-900 p-4 text-red-100">
+						<p>Error loading courses: {$coursesQuery.error.message}</p>
+						<Button class="mt-2" on:click={() => $coursesQuery.refetch()}>Retry</Button>
+					</div>
+				{:else if $coursesQuery?.data?.courses?.length ?? 0 > 0}
+					{#each $coursesQuery?.data?.courses || [] as course}
+						<CourseItem {course} />
+					{/each}
 				{:else}
-					<p class="text-lg">No courses found</p>
+					<p class="col-span-2 text-center text-lg">
+						No courses found. Add a course to get started!
+					</p>
 				{/if}
 			</div>
 		</section>
 		<section class="w-2/5">
 			<h2 class="mb-6 text-4xl font-bold">Upcoming Deadlines</h2>
-			<!-- <div class="flex flex-col gap-4">
-				{#each mockTasks.filter((task) => !task.isDone) as task}
-					<div
-						class="hover:bg-zinc-750 rounded-lg border border-zinc-700 bg-zinc-800 p-5 transition-all duration-300"
-					>
-						<div class="mb-2 flex items-center justify-between">
-							<h3 class="text-lg font-semibold">{task.title}</h3>
-							<span class="flex items-center gap-1 text-sm font-medium text-amber-400">
-								<span>⏰</span>
-								Due: {formatDate(task.dueDate)}
-							</span>
+			<div class="flex flex-col gap-4">
+				{#if $upTasksQuery.isLoading}
+					{#each Array(3) as _}
+						<div class="rounded-lg border border-zinc-700 bg-zinc-800 p-5">
+							<div class="mb-2 flex items-center justify-between">
+								<div class="h-6 w-32 animate-pulse rounded bg-zinc-700"></div>
+								<div class="h-4 w-24 animate-pulse rounded bg-zinc-700"></div>
+							</div>
+							<div class="mb-3 h-4 w-full animate-pulse rounded bg-zinc-700"></div>
+							<div class="flex items-center justify-between">
+								<div class="h-8 w-32 animate-pulse rounded bg-zinc-700"></div>
+								<div class="h-4 w-16 animate-pulse rounded bg-zinc-700"></div>
+							</div>
 						</div>
-						<p class="mb-3 text-sm text-zinc-300">{task.desc}</p>
-						<div class="flex items-center justify-between">
-							<Button
-								variant="outline"
-								size="sm"
-								class="border-zinc-600 text-zinc-300 hover:bg-zinc-700"
-							>
-								Mark as Complete
-							</Button>
-							<span class="flex items-center gap-1 text-sm text-zinc-400">
-								<span class={task.isDone ? 'text-green-500' : 'text-zinc-600'}>
-									{task.isDone ? '✅' : '⭕'}
-								</span>
-								{task.isDone ? 'Completed' : 'Pending'}
-							</span>
-						</div>
+					{/each}
+				{:else if $upTasksQuery.isError}
+					<div class="rounded-lg border border-red-700 bg-red-900 p-4 text-red-100">
+						<p>Error loading tasks: {$upTasksQuery.error.message}</p>
+						<Button class="mt-2" onclick={() => $upTasksQuery.refetch()}>Retry</Button>
 					</div>
-				{/each}
-			</div> -->
+				{:else if $upTasksQuery?.data?.tasks?.filter((task) => !task.isDone)?.length ?? 0 > 0}
+					{#each $upTasksQuery.data?.tasks?.filter((task) => !task.isDone) || [] as task}
+						<TaskItem {task} />
+					{/each}
+				{:else}
+					<p class="text-center text-lg">No upcoming tasks. Great job!</p>
+				{/if}
+			</div>
 		</section>
 	</div>
 </main>
+
+<style>
+	:global(body) {
+		background-color: #18181b;
+		color: #fafafa;
+	}
+</style>
