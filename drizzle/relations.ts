@@ -1,5 +1,18 @@
 import { relations } from "drizzle-orm/relations";
-import { course, task, user } from "./schema";
+import { user, course, task } from "./schema";
+
+export const courseRelations = relations(course, ({one, many}) => ({
+	user: one(user, {
+		fields: [course.userId],
+		references: [user.id]
+	}),
+	tasks: many(task),
+}));
+
+export const userRelations = relations(user, ({many}) => ({
+	courses: many(course),
+	tasks: many(task),
+}));
 
 export const taskRelations = relations(task, ({one}) => ({
 	course: one(course, {
@@ -10,12 +23,4 @@ export const taskRelations = relations(task, ({one}) => ({
 		fields: [task.userId],
 		references: [user.id]
 	}),
-}));
-
-export const courseRelations = relations(course, ({many}) => ({
-	tasks: many(task),
-}));
-
-export const userRelations = relations(user, ({many}) => ({
-	tasks: many(task),
 }));

@@ -19,7 +19,8 @@ export const course = sqliteTable('course', {
 	archived: integer('archived', { mode: 'boolean' }).default(false),
 	userId: integer('userId')
 		.references(() => user.id)
-		.notNull()
+		.notNull(),
+	instructor: text('instructor').default('')
 });
 
 export const task = sqliteTable('task', {
