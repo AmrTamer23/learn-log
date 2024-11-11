@@ -28,7 +28,7 @@
 	});
 </script>
 
-<main>
+<main class="min-h-screen">
 	<header>
 		<Navbar name={authStore.current.user?.email} />
 	</header>

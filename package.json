@@ -48,6 +48,7 @@
 	},
 	"dependencies": {
 		"@fontsource-variable/playfair-display": "^5.1.0",
+		"@fontsource/ibm-plex-serif": "^5.1.0",
 		"@fontsource/inknut-antiqua": "^5.1.0",
 		"@fontsource/smooch": "^5.1.0",
 		"@libsql/client": "^0.14.0",

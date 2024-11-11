@@ -12,7 +12,7 @@
 	<div>
 		<a
 			href="/"
-			class="flex items-center font-highlight text-4xl font-semibold text-primary !no-underline"
+			class="flex items-center font-highlight text-4xl font-semibold italic text-primary !no-underline"
 		>
 			Learn Log
 		</a>
