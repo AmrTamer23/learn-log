@@ -12,11 +12,13 @@
 	});
 </script>
 
-<main class="p-1 font-sans">
+<main class="p-4 font-sans">
 	<section class="hero rounded-lg text-white">
 		<div class="container mx-auto flex flex-col justify-center px-6 py-20 *:mx-auto">
 			<h1 class="mb-4 text-5xl font-bold">
-				Track Your Learning Journey with <span class="font-highlight font-thin italic">
+				Track Your Learning Journey with <span
+					class="text-pretty font-highlight font-thin italic text-primary"
+				>
 					Learn Log
 				</span>
 			</h1>
@@ -33,7 +35,7 @@
 			<div class="grid grid-cols-1 gap-12 md:grid-cols-3">
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-blue-500"
+						class="mx-auto mb-4 h-12 w-12 text-primary"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -50,7 +52,7 @@
 				</div>
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-blue-500"
+						class="mx-auto mb-4 h-12 w-12 text-primary"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -67,7 +69,7 @@
 				</div>
 				<div class="text-center">
 					<svg
-						class="mx-auto mb-4 h-12 w-12 text-blue-500"
+						class="mx-auto mb-4 h-12 w-12 text-primary"
 						fill="none"
 						stroke="currentColor"
 						viewBox="0 0 24 24"
@@ -87,7 +89,7 @@
 	</section>
 
 	{#if showTestimonial}
-		<section class="bg-gray-100 py-20" transition:fade>
+		<section class=" py-20" transition:fade>
 			<div class="container mx-auto px-6">
 				<div class="mx-auto max-w-2xl text-center">
 					<svg
@@ -109,7 +111,7 @@
 		</section>
 	{/if}
 
-	<footer class="bg-gray-800 py-8 text-white">
+	<footer class=" py-8 text-white">
 		<div class="container mx-auto px-6 text-center">
 			<p>&copy; 2023 Learn Log. All rights reserved.</p>
 		</div>
@@ -118,7 +120,8 @@
 
 <style>
 	.hero {
-		background-color: #004f8c;
-		background-image: url('https://www.transparenttextures.com/patterns/black-orchid.png');
+		background-color: #241100;
+		background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+		/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 	}
 </style>
