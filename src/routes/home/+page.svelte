@@ -5,6 +5,10 @@
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import type { Course, Task } from '$lib/types';
 	import { createQuery } from '@tanstack/svelte-query';
+	import * as Dialog from '$lib/components/ui/dialog';
+	import CourseForm from './course-form.svelte';
+	import type { PageData } from './$types.js';
+	export let data: PageData;
 
 	const coursesQuery = createQuery<
 		{
@@ -59,24 +63,39 @@
 		<section class="flex w-3/5 flex-col gap-4">
 			<div class="flex items-center justify-between">
 				<h2 class="text-4xl font-bold">My Courses</h2>
-				<Button variant="outline" class="border-zinc-700 text-zinc-100 hover:bg-zinc-800">
-					<svg
-						width="1.5rem"
-						height="1.5rem"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path
-							fill="none"
-							stroke="currentColor"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M5 12h14m-7-7v14"
-						/>
-					</svg>
-					Add Course
-				</Button>
+
+				<Dialog.Root>
+					<Dialog.Trigger>
+						<Button variant="outline" class="border-zinc-700 text-zinc-100 hover:bg-zinc-800">
+							<svg
+								width="1.5rem"
+								height="1.5rem"
+								viewBox="0 0 24 24"
+								xmlns="http://www.w3.org/2000/svg"
+							>
+								<path
+									fill="none"
+									stroke="currentColor"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M5 12h14m-7-7v14"
+								/>
+							</svg>
+							Add Course
+						</Button>
+					</Dialog.Trigger>
+					<Dialog.Content class="bg-zinc-800 p-4">
+						<Dialog.Header>
+							<Dialog.Title>Add new Course</Dialog.Title>
+							<Dialog.Description>
+								This action cannot be undone. This will permanently delete your account and remove
+								your data from our servers.
+							</Dialog.Description>
+						</Dialog.Header>
+						<CourseForm data={data.form} />
+					</Dialog.Content>
+				</Dialog.Root>
 			</div>
 			<div class="grid grid-cols-2 gap-6 pt-4">
 				{#if $coursesQuery.isLoading}
