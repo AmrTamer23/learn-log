@@ -1,7 +1,7 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { db } from '$lib/server/db';
-import { User } from '$lib/server/db/schema';
+import { user } from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
 
@@ -12,7 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return error(400, 'Missing required fields');
 	}
 
-	const existingUser = await db.select().from(User).where(eq(User.email, email));
+	const existingUser = await db.select().from(user).where(eq(user.email, email));
 	if (existingUser.length > 0) {
 		return error(400, 'User with this email already exists');
 	}
@@ -20,17 +20,17 @@ export const POST: RequestHandler = async ({ request }) => {
 	const hashedPassword = await bcrypt.hash(password, 10);
 
 	const users = await db
-		.insert(User)
+		.insert(user)
 		.values({
 			name,
 			email,
 			password: hashedPassword,
-			dob
+			dateOfBirth: dob
 		})
 		.returning();
 
-	const user = users[0];
+	const userData = users[0];
 
-	const { password: _, ...userWithoutPassword } = user;
+	const { password: _, ...userWithoutPassword } = userData;
 	return json({ user: userWithoutPassword });
 };

@@ -1,33 +1,15 @@
 <script lang="ts">
 	import Header from './Header.svelte';
 	import '../app.css';
-	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
-
-	const queryClient = new QueryClient();
+	import { QueryClientProvider } from '@tanstack/svelte-query';
 
 	let { children } = $props();
 </script>
 
-<div class="app">
+<div class="app dark bg-background text-foreground">
 	<main>
 		<QueryClientProvider>
 			{@render children()}
 		</QueryClientProvider>
 	</main>
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		width: 100%;
-		box-sizing: border-box;
-	}
-</style>
