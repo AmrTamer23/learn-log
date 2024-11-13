@@ -11,7 +11,7 @@
 </script>
 
 <div
-	class="hover:bg-zinc-750 rounded-lg border border-zinc-700 bg-zinc-800 p-5 transition-all duration-300"
+	class="hover:bg-zinc-750 motion-preset-expand rounded-lg border border-zinc-700 bg-zinc-800 p-5 transition-all duration-300"
 >
 	<div class="mb-2 flex items-center justify-between">
 		<h3 class="text-lg font-semibold">{task.title}</h3>

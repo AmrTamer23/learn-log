@@ -1,6 +1,7 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
+import twMotion from 'tailwindcss-motion';
 
 const config: Config = {
 	darkMode: ['class'],
@@ -91,7 +92,7 @@ const config: Config = {
 			}
 		}
 	},
-	plugins: [tailwindcssAnimate]
+	plugins: [tailwindcssAnimate, twMotion]
 };
 
 export default config;

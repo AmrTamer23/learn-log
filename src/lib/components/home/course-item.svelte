@@ -10,7 +10,7 @@
 </script>
 
 <div
-	class="hover:bg-zinc-750 flex flex-col gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-md transition-all duration-300"
+	class="hover:bg-zinc-750 motion-preset-blur-right flex flex-col gap-3 rounded-lg border border-zinc-700 bg-zinc-800 p-6 shadow-md transition-all duration-300"
 >
 	<div class="flex items-center justify-between">
 		<div class="flex items-center gap-3">
