@@ -88,12 +88,11 @@
 					<Dialog.Content class="bg-zinc-800 p-4">
 						<Dialog.Header>
 							<Dialog.Title>Add new Course</Dialog.Title>
-							<Dialog.Description>
-								This action cannot be undone. This will permanently delete your account and remove
-								your data from our servers.
+							<Dialog.Description class="text-zinc-300">
+								Enter the details of the course you want to add.
 							</Dialog.Description>
 						</Dialog.Header>
-						<CourseForm data={data.form} />
+						<CourseForm {...data.form.data} />
 					</Dialog.Content>
 				</Dialog.Root>
 			</div>

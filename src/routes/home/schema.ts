@@ -5,7 +5,11 @@ export const courseFormSchema = z.object({
 	description: z.string().max(500),
 	dateOfStart: z.string().optional(),
 	color: z.string().optional(),
-	emoji: z.string().optional()
+	emoji: z
+		.string()
+		.regex(/^[\p{Emoji}]+$/u)
+		.optional(),
+	instructor: z.string().optional()
 });
 
 export type FormSchema = typeof courseFormSchema;
